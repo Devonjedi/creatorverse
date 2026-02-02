@@ -16,7 +16,7 @@ const App = () => {
 
   return (
     <div className="App">
-      {/* Navigation Bar using PicoCSS classes */}
+      {/* Navigation Bar uses PicoCSS classes */}
       <nav className="container">
         <ul>
           <li><strong>💫 CREATORVERSE</strong></li>

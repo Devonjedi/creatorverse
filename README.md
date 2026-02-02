@@ -1,16 +1,53 @@
-# React + Vite
+# WEB103 Prework - *Creatorverse*
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Submitted by: **Devon Ek**
 
-Currently, two official plugins are available:
+About this web app: **A full-stack React application that allows users to create, view, update, and delete their favorite content creators, backed by a Supabase database.**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Time spent: **10-12** hours
 
-## React Compiler
+## Required Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The following **required** functionality is completed:
 
-## Expanding the ESLint configuration
+- [x] **A logical component structure in React is used to create the frontend of the app**
+- [x] **At least five content creators are displayed on the homepage of the app**
+- [x] **Each content creator item includes their name, a link to their channel/page, and a short description of their content**
+- [x] **API calls use the async/await design pattern via Axios or fetch()**
+- [x] **Clicking on a content creator item takes the user to their details page, which includes their name, url, and description**
+- [x] **Each content creator has their own unique URL**
+- [x] **The user can edit a content creator to change their name, url, or description**
+- [x] **The user can delete a content creator**
+- [x] **The user can add a new content creator by entering a name, url, or description and then it is displayed on the homepage**
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+The following **optional** (Stretch) features are implemented:
+
+- [x] **PicoCSS is used to style HTML elements**
+- [x] **The content creator items are displayed in a creative format, like cards instead of a list**
+- [x] **An image of each content creator is shown on their content creator card**
+
+The following **additional** features are implemented:
+
+* [x] **Security Best Practices**: Utilized `.env` files and Vite's `VITE_` prefix to securely manage Supabase API keys, ensuring they are not hard-coded into the repository.
+
+## Video Walkthrough
+
+Here's a walkthrough of implemented required features:
+
+<img src='creatorverse.gif' title='Video Walkthrough' width='100%' alt='Video Walkthrough' />
+
+GIF created with licecap
+
+## Notes
+
+One of the trickiest parts of the project was debugging silent database failures. I learned that Supabase is strictly case-sensitive when it comes to column names. If my React code sent a key as imageURL but the database expected image_url or a differently capitalized version, the request would fail without an obvious error on the frontend. I also had to overcome the new row violates row-level security policy error by correctly configuring database permissions to allow my app to write data.
+
+## License
+
+Copyright 2026, Devon Ek
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+
+> http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.

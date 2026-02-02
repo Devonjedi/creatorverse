@@ -1,87 +1,39 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { supabase } from '../client';
 
-const EditCreator = () => {
+const ViewCreator = () => {
     const { id } = useParams();
-    const [creator, setCreator] = useState({ name: "", url: "", description: "", imageURL: "" });
+    const [creator, setCreator] = useState(null);
 
-    // 1. Fetch the current data to pre-fill the form
     useEffect(() => {
         const fetchCreator = async () => {
-            const { data } = await supabase
-                .from('creators')
-                .select()
-                .eq('id', id)
-                .single();
-
+            const { data } = await supabase.from('creators').select().eq('id', id).single();
             if (data) setCreator(data);
         };
         fetchCreator();
     }, [id]);
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setCreator((prev) => ({ ...prev, [name]: value }));
-    };
-
-    // 2. Update the creator
-    const updateCreator = async (event) => {
-        event.preventDefault();
-        const { error } = await supabase
-            .from('creators')
-            .update({
-                name: creator.name,
-                url: creator.url,
-                description: creator.description,
-                imageURL: creator.imageURL
-            })
-            .eq('id', id);
-
-        if (error) {
-            console.error('Error updating creator:', error);
-        } else {
-            window.location = "/";
-        }
-    };
-
-    // 3. Delete the creator
-    const deleteCreator = async () => {
-        const { error } = await supabase
-            .from('creators')
-            .delete()
-            .eq('id', id);
-
-        if (error) {
-            console.error('Error deleting creator:', error);
-        } else {
-            window.location = "/";
-        }
-    };
+    if (!creator) return <article aria-busy="true"></article>;
 
     return (
         <main className="container">
-            <h1>Edit Creator ✍️</h1>
-            <form onSubmit={updateCreator}>
-                <label>Name</label>
-                <input type="text" name="name" value={creator.name} onChange={handleChange} required />
-
-                <label>URL</label>
-                <input type="url" name="url" value={creator.url} onChange={handleChange} required />
-
-                <label>Description</label>
-                <textarea name="description" rows="3" value={creator.description} onChange={handleChange} required></textarea>
-
-                <label>Image URL (Optional)</label>
-                <input type="url" name="imageURL" value={creator.imageURL || ""} onChange={handleChange} />
-
-                <div className="grid">
-                    <button type="submit">Update Creator</button>
-                    <button type="button" className="outline secondary" onClick={deleteCreator}>Delete Creator</button>
-                </div>
-            </form>
+            <article>
+                <header><h1>{creator.name}</h1></header>
+                {creator.imageURL && (
+                    <img src={creator.imageURL} alt={creator.name} style={{ width: '100%', borderRadius: '8px' }} />
+                )}
+                <p><strong>Description:</strong> {creator.description}</p>
+                <p><strong>URL:</strong> <a href={creator.url} target="_blank" rel="noreferrer">{creator.url}</a></p>
+                <footer>
+                    <div className="grid">
+                        <Link to={`/edit/${creator.id}`} role="button" className="secondary">Edit</Link>
+                        <Link to="/" role="button" className="outline">Back to Gallery</Link>
+                    </div>
+                </footer>
+            </article>
         </main>
     );
 };
 
-export default EditCreator;
+export default ViewCreator;
